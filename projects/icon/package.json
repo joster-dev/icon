@@ -1,29 +1,30 @@
 {
   "name": "@joster-dev/icon",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
-  "description": "scalable vector graphics",
+  "description": "SVG icons with gradients",
   "keywords": [
     "svg",
     "icon"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/joster-dev/icon/"
-  },
+  "repository": "github:joster-dev/icon",
   "homepage": "https://joster-dev.github.io/icon/",
   "author": {
     "name": "Jacob Osterhout",
     "url": "https://joster-dev.github.io/"
   },
+  "funding": {
+    "type": "github sponsors",
+    "url": "https://github.com/sponsors/joster-dev"
+  },
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": "^12.0.2",
-    "@angular/core": "^12.0.2"
+    "@angular/common": ">=12.0.2",
+    "@angular/core": ">=12.0.2"
   },
   "dependencies": {
-    "tslib": "^2.1.0"
+    "tslib": ">=2.1.0"
   }
 }
