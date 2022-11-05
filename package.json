@@ -2,9 +2,9 @@
   "name": "icon",
   "version": "0.0.0",
   "scripts": {
-    "pages": "ng build --project=docs --prod --base-href=https://joster-dev.github.io/icon/",
+    "pages": "ng build --project=demo --base-href=https://joster-dev.github.io/icon/",
     "package": "npm run _build-lib && npm run _npm-publish",
-    "_build-lib": "ng build --prod && npm run _copy-license",
+    "_build-lib": "ng build && npm run _copy-license",
     "_copy-license": "powershell Copy-Item '.\\LICENSE' -Destination '.\\dist\\icon'",
     "_npm-publish": "cd dist/icon && npm publish"
   },
