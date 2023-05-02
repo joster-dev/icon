@@ -41,11 +41,11 @@ export class IconComponent extends SizeDirective {
   get fillRotate() {
     return this._fillRotate;
   }
-  set fillRotate(value: string) {
+  set fillRotate(value: string | number) {
     if (typeof value === 'number')
       value = String(value);
     if (typeof value !== 'string')
-      throw new Error('expected [fillRotate] to be: string');
+      throw new Error('expected [fillRotate] to be: string | number');
     this._fillRotate = value;
   }
   _fillRotate = '0';
@@ -80,20 +80,32 @@ export class IconComponent extends SizeDirective {
   get strokeRotate() {
     return this._strokeRotate;
   }
-  set strokeRotate(value: string) {
+  set strokeRotate(value: string | number) {
     if (typeof value === 'number')
       value = String(value);
     if (typeof value !== 'string')
-      throw new Error('expected [strokeRotate] to be: string');
+      throw new Error('expected [strokeRotate] to be: string | number');
     this._strokeRotate = value;
   }
   _strokeRotate = '0';
 
   @Input()
+  get rotate() {
+    return this._rotate;
+  }
+  set rotate(value: string | number) {
+    if (typeof value === 'number')
+      value = String(value);
+    if (typeof value !== 'string')
+      throw new Error('expected [rotate] to be: string | number');
+    this._rotate = value;
+  }
+  _rotate = '0'
+
+  @Input()
   spin: 'x' | 'y' | 'z' | null = null;
 
-  id = `${Math.random().toString(36).substr(2, 9)}`;
-  hexString = /^[0-9A-Fa-f]{6}$/;
+  id = `${Math.random().toString(36).substring(2, 13)}`;
 
   constructor() {
     super();
