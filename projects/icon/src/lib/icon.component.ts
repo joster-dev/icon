@@ -6,7 +6,7 @@ import { SizeDirective } from './size.directive';
 @Component({
   selector: 'icon[type]',
   templateUrl: './icon.component.html',
-  styleUrls: ['./icon.component.scss']
+  styleUrls: ['./icon.component.scss'],
 })
 export class IconComponent extends SizeDirective {
   @Input()

@@ -5,7 +5,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { MarkdownModule } from 'ngx-markdown';
 
-import { IconModule } from 'dist/icon';
+// import { IconModule } from 'dist/icon';
 
 import { AppComponent } from './app.component';
 
@@ -16,7 +16,7 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     FormsModule,
-    IconModule,
+    // IconModule,
     HttpClientModule,
     MarkdownModule.forRoot({ loader: HttpClient })
   ],

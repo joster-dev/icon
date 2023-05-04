@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { iconTypes, icon } from 'dist/icon';
 
 @Component({
-  selector: 'app-root',
+  selector: 'demo-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
