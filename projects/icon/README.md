@@ -25,7 +25,7 @@ import the module
 - for body color
 - when `string[]`
   - vertical gradient left to right
-- when `null`
+- when `'current'`
   - uses [`currentColor`](https://www.w3.org/wiki/CSS3/Color/currentColor)
 
 ### **`fillRotate`** input expects `boolean` defaults to `false`

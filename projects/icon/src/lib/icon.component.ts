@@ -42,13 +42,13 @@ export class IconComponent extends SizeDirective {
     return this._fillRotate;
   }
   set fillRotate(value: string | number) {
-    if (typeof value === 'number')
-      value = String(value);
-    if (typeof value !== 'string')
+    if (typeof value === 'string')
+      value = Number(value);
+    if (typeof value !== 'number')
       throw new Error('expected [fillRotate] to be: string | number');
     this._fillRotate = value;
   }
-  _fillRotate = '0';
+  _fillRotate = 0;
 
   @Input()
   get fillOpacity() {
@@ -81,26 +81,13 @@ export class IconComponent extends SizeDirective {
     return this._strokeRotate;
   }
   set strokeRotate(value: string | number) {
-    if (typeof value === 'number')
-      value = String(value);
-    if (typeof value !== 'string')
+    if (typeof value === 'string')
+      value = Number(value);
+    if (typeof value !== 'number')
       throw new Error('expected [strokeRotate] to be: string | number');
     this._strokeRotate = value;
   }
-  _strokeRotate = '0';
-
-  @Input()
-  get rotate() {
-    return this._rotate;
-  }
-  set rotate(value: string | number) {
-    if (typeof value === 'number')
-      value = String(value);
-    if (typeof value !== 'string')
-      throw new Error('expected [rotate] to be: string | number');
-    this._rotate = value;
-  }
-  _rotate = '0'
+  _strokeRotate = 0;
 
   @Input()
   spin: 'x' | 'y' | 'z' | null = null;

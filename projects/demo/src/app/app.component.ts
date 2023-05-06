@@ -21,12 +21,12 @@ export class AppComponent {
       { color: '700024' },
       { color: '002470' },
     ],
-    fillRotate: '0',
+    fillRotate: 0,
     fillOpacity: 1,
     stroke: [
       { color: 'FFFFFF' }
     ],
-    strokeRotate: '0',
+    strokeRotate: 0,
     spin: null
   }));
   rotateItems = [
@@ -78,7 +78,7 @@ export class AppComponent {
     return lines;
   }
 
-  onRefineClicked() {
+  onClickRefine() {
     this.searchTerm = null;
   }
 
@@ -109,9 +109,9 @@ export class AppComponent {
 interface IconTypeItem {
   type: icon;
   fill: { color: string }[];
-  fillRotate: string;
+  fillRotate: number;
   fillOpacity: number;
   stroke: { color: string }[];
-  strokeRotate: string;
+  strokeRotate: number;
   spin: 'x' | 'y' | null;
 }

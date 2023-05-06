@@ -4,14 +4,13 @@
   version="1.1"
   xmlns="http://www.w3.org/2000/svg"
   viewBox="0 0 100 100"
-  [style.transform]="'rotate(' + rotate  + 'deg)'"
   [class.spin-x]="spin === 'x'"
   [class.spin-y]="spin === 'y'"
   [class.spin-z]="spin === 'z'"
 >
   <linearGradient
     id="fill-gradient-{{id}}"
-    attr.gradientTransform="rotate({{_fillRotate}})"
+    attr.gradientTransform="rotate({{_fillRotate}}) translate({{(_fillRotate / 180) % 0.5}})"
   >
     <stop
       *ngFor="let item of _fill; let idx = index"
@@ -22,7 +21,7 @@
   </linearGradient>
   <linearGradient
     id="stroke-gradient-{{id}}"
-    attr.gradientTransform="rotate({{_strokeRotate}})"
+    attr.gradientTransform="rotate({{_strokeRotate}}) translate({{(_strokeRotate / 180) % 0.5}})"
   >
     <stop
       *ngFor="let item of _stroke; let idx = index"
@@ -339,5 +338,34 @@
     stroke-dasharray="13.25 5.5"
     width="75"
     height="75"
+  />
+  <path
+    *ngIf="type === 'amphora'"
+    attr.fill="url(#fill-gradient-{{id}})"
+    [attr.fill-opacity]="fillOpacity"
+    attr.stroke="url(#stroke-gradient-{{id}})"
+    stroke-width="5"
+    stroke-miterlimit="10"
+    d="M93,128.5c0-11.046-7.835-20-17.5-20
+c-3.586,0-6.917,1.237-9.691,3.352c0.025-0.749,0.084-1.409,0.191-1.852c0.471-1.918,3.656-7,3.656-7H31.344
+c0,0,3.186,5.082,3.656,7c0.108,0.442,0.166,1.103,0.192,1.852c-2.775-2.115-6.106-3.352-9.692-3.352c-9.665,0-17.5,8.954-17.5,20
+c0,7.019,3.17,13.182,7.956,16.751c-0.291,1.687-0.456,3.436-0.456,5.249c0,13.744,18.398,40.5,18.398,40.5l-2.555,7h38.313
+l-2.555-7c0,0,18.398-26.756,18.398-40.5c0-1.813-0.164-3.563-0.456-5.249C89.83,141.682,93,135.519,93,128.5z M15.5,128.5
+c0-6.903,4.478-12.5,10-12.5c2.789,0,5.309,1.43,7.122,3.732c-3.582,2.808-10.347,8.93-14.215,17.577
+C16.611,135.049,15.5,131.937,15.5,128.5z M82.593,137.309c-3.866-8.647-10.634-14.769-14.215-17.577
+C70.191,117.43,72.711,116,75.5,116c5.521,0,10,5.597,10,12.5C85.5,131.937,84.389,135.049,82.593,137.309z"
+  />
+  <path
+    *ngIf="type === 'speech'"
+    attr.fill="url(#fill-gradient-{{id}})"
+    [attr.fill-opacity]="fillOpacity"
+    attr.stroke="url(#stroke-gradient-{{id}})"
+    stroke-width="5"
+    stroke-miterlimit="10"
+    d="M50,2.5C26.702,2.5,2.5,22.339,2.5,45
+	c0,8.368,3.307,16.347,8.641,23.084L3.979,94.813l23.196-13.393c7.078,3.83,15,6.076,22.825,6.076c23.299,0,47.5-19.838,47.5-42.5
+	C97.5,22.336,73.299,2.5,50,2.5z M75,60.001H25c-2.762,0-5-2.238-5-5s2.238-5,5-5h50c2.762,0,5,2.239,5,5
+	C80,57.763,77.762,60.001,75,60.001z M75,40H25c-2.762,0-5-2.239-5-5s2.238-5,5-5h50c2.762,0,5,2.239,5,5C80,37.763,77.762,40,75,40
+	z"
   />
 </svg>

@@ -27,4 +27,6 @@ export const iconTypes = [
   'sun',
   'moon',
   'clear',
+  'amphora',
+  'speech'
 ] as const;

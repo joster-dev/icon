@@ -22,7 +22,7 @@ export class SizeDirective implements OnDestroy {
     this.sizeChangesSubject.next();
   }
   _size = '100%';
-  sizeChangesSubject = new Subject();
+  sizeChangesSubject = new Subject<void>();
 
   ngOnDestroy(): void {
     this.sizeChangesSubject.complete();

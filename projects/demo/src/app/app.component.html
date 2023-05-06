@@ -2,11 +2,11 @@
 
 <h2>icon demos</h2>
 <div class="pt-2">
-  <fc-text
+  <jo-text
     [(ngModel)]="searchTerm"
     [maxLength]="100"
     placeholder="Find an icon by name"
-  >demo search</fc-text>
+  >demo search</jo-text>
 </div>
 
 <div class="d-flex flex-wrap f-justify-center">
@@ -17,14 +17,14 @@
     [href]="'#' + icon.type"
     [title]="icon.type"
   >
-    <fc-button>
+    <jo-button>
       <icon
         [type]="icon.type"
         size="3em"
         [fillOpacity]="0"
         stroke="FFFFFF"
       ></icon>
-    </fc-button>
+    </jo-button>
   </a>
 </div>
 
@@ -32,9 +32,9 @@
   *ngIf="filteredTypes.length === 0"
   class="d-flex f-justify-center pb-2 pt-2"
 >
-  <fc-button (clicked)="onRefineClicked()">
+  <jo-button (onClick)="onClickRefine()">
     Please refine your search
-  </fc-button>
+  </jo-button>
 </div>
 
 <div
@@ -49,97 +49,97 @@
       <h4>configure</h4>
       <div class="col-1-1">
         <div class="fill-container">
-          <fc-button
+          <jo-button
             [isDisabled]="item.fill.length >= 5"
-            (clicked)="item.fill.push({ color: '000000'})"
+            (onClick)="item.fill.push({ color: '000000'})"
           >
             add fill color
-          </fc-button>
+          </jo-button>
         </div>
         <div
           *ngFor="let fill of item.fill; let idx = index"
           class="fill-container"
         >
-          <fc-color
+          <jo-color
             [(ngModel)]="fill.color"
             name="fill-{{item.type}}-{{idx}}"
-            [brRight]="false"
+            [borderRadiusRight]="false"
           >
             fill color {{idx + 1}}
-          </fc-color>
-          <fc-color
-            [brRight]="false"
-            [brLeft]="false"
+          </jo-color>
+          <jo-button
+            [borderRadiusRight]="false"
+            [borderRadiusLeft]="false"
             title="Clear color, transparent"
-            (clicked)="fill.color = 'clear'"
+            (onClick)="fill.color = 'clear'"
           >
             🆑
-          </fc-color>
-          <fc-button
-            [brLeft]="false"
+          </jo-button>
+          <jo-button
+            [borderRadiusLeft]="false"
             title="Remove"
-            (clicked)="item.fill.splice(idx, 1)"
+            (onClick)="item.fill.splice(idx, 1)"
           >
             ❌
-          </fc-button>
+          </jo-button>
         </div>
-        <fc-choice
+        <jo-choice
           [(ngModel)]="item.fillRotate"
           name="fillRotate"
           [required]="true"
           [items]="rotateItems"
         >
           fill rotate
-        </fc-choice>
-        <fc-choice
+        </jo-choice>
+        <jo-choice
           [(ngModel)]="item.fillOpacity"
           name="fillOpacity"
           [required]="true"
           [items]="opacityItems"
         >
           fill opacity
-        </fc-choice>
+        </jo-choice>
         <div class="fill-container">
-          <fc-button
+          <jo-button
             [isDisabled]="item.stroke.length >= 5"
-            (clicked)="item.stroke.push({ color: '000000'})"
+            (onClick)="item.stroke.push({ color: '000000'})"
           >
             add stroke color
-          </fc-button>
+          </jo-button>
         </div>
         <div
           *ngFor="let stroke of item.stroke; let idx = index"
           class="fill-container"
         >
-          <fc-color
+          <jo-color
             [(ngModel)]="stroke.color"
             name="stroke-{{item.type}}-{{idx}}"
-            [brRight]="false"
+            [borderRadiusRight]="false"
           >
             stroke color {{idx + 1}}
-          </fc-color>
-          <fc-button
-            [brLeft]="false"
-            (clicked)="item.stroke.splice(idx, 1)"
+          </jo-color>
+          <jo-button
+            [borderRadiusLeft]="false"
+            (onClick)="item.stroke.splice(idx, 1)"
           >
             remove
-          </fc-button>
+          </jo-button>
         </div>
-        <fc-choice
+        <jo-choice
           [(ngModel)]="item.strokeRotate"
           name="strokeRotate"
           [required]="true"
           [items]="rotateItems"
         >
           stroke rotate
-        </fc-choice>
-        <fc-choice
+        </jo-choice>
+        <jo-choice
           [(ngModel)]="item.spin"
           name="spin"
           [items]="spinItems"
         >
           spin
-        </fc-choice>
+        </jo-choice>
       </div>
       <h4>html code</h4>
       <pre><code class="language-markup">{{htmlCode(item).join('\n')}}</code></pre>
