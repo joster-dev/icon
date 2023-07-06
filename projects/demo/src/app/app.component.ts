@@ -17,8 +17,8 @@ export class AppComponent {
   typeItems: IconTypeItem[] = iconTypes.map(iconType => ({
     type: iconType,
     fill: [
-      { color: '247000' },
       { color: '700024' },
+      { color: '247000' },
       { color: '002470' },
     ],
     fillRotate: 0,
@@ -36,8 +36,7 @@ export class AppComponent {
   ]
   spinItems = [
     { key: 'x', value: 'x' },
-    { key: 'y', value: 'y' },
-    { key: 'z', value: 'z' }
+    { key: 'y', value: 'y' }
   ];
   opacityItems = [
     { key: 1, value: '1' },
@@ -82,14 +81,13 @@ export class AppComponent {
     this.searchTerm = null;
   }
 
-  mapColors(items: { color: string }[]) {
+  mapColors(items: { color: string | null }[]) {
     return items.map(item => item.color);
   }
 
   htmlCode(item: IconTypeItem) {
     let lines = [
       `<icon type="${item.type}"`,
-      `size="10em"`,
       `[fill]="[${item.fill.map(fill => `${fill.color === null ? 'null' : `'${fill.color}'`}`).join(', ')}]"`,
       `[fillRotate]="${item.fillRotate}"`,
       `[stroke]="[${item.stroke.map(stroke => `${stroke.color === null ? 'null' : `'${stroke.color}'`}`).join()}]"`,
@@ -108,7 +106,7 @@ export class AppComponent {
 
 interface IconTypeItem {
   type: icon;
-  fill: { color: string }[];
+  fill: { color: string | null }[];
   fillRotate: number;
   fillOpacity: number;
   stroke: { color: string }[];

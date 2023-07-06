@@ -44,8 +44,8 @@
   <h3 [id]="item.type">
     {{item.type}} demo
   </h3>
-  <div class="d-flex">
-    <form class="flex-1 overflow-hidden">
+  <div class="grid">
+    <form>
       <h4>configure</h4>
       <div class="col-1-1">
         <div class="fill-container">
@@ -67,14 +67,6 @@
           >
             fill color {{idx + 1}}
           </jo-color>
-          <jo-button
-            [borderRadiusRight]="false"
-            [borderRadiusLeft]="false"
-            title="Clear color, transparent"
-            (onClick)="fill.color = 'clear'"
-          >
-            🆑
-          </jo-button>
           <jo-button
             [borderRadiusLeft]="false"
             title="Remove"
@@ -122,7 +114,7 @@
             [borderRadiusLeft]="false"
             (onClick)="item.stroke.splice(idx, 1)"
           >
-            remove
+            ❌
           </jo-button>
         </div>
         <jo-choice
@@ -141,52 +133,37 @@
           spin
         </jo-choice>
       </div>
-      <h4>html code</h4>
-      <pre><code class="language-markup">{{htmlCode(item).join('\n')}}</code></pre>
     </form>
-    <div class="heading pl-1 pt-1">
-      <div class="d-flex">
-        <div class="icon-frame">
-          <div class="icon-container">
-            <icon
-              [type]="item.type"
-              [fill]="mapColors(item.fill)"
-              [fillRotate]="item.fillRotate"
-              [fillOpacity]="item.fillOpacity"
-              [stroke]="mapColors(item.stroke)"
-              [strokeRotate]="item.strokeRotate"
-              [spin]="item.spin"
-            ></icon>
-          </div>
-        </div>
-      </div>
+    <div class="heading p-1">
+      <icon
+        [type]="item.type"
+        [fill]="mapColors(item.fill)"
+        [fillRotate]="item.fillRotate"
+        [fillOpacity]="item.fillOpacity"
+        [stroke]="mapColors(item.stroke)"
+        [strokeRotate]="item.strokeRotate"
+        [spin]="item.spin"
+      ></icon>
     </div>
   </div>
+  <h4>{{item.type}} html code</h4>
+  <pre><code class="language-markup">{{htmlCode(item).join('\n')}}</code></pre>
 </div>
 
 <h3>icon-stack demo</h3>
-<div class="d-flex pb-2">
-  <div class="flex-1 overflow-hidden">
-    <h4>html code</h4>
-    <pre><code class="language-markup">{{iconStackHtmlCode.join('\n')}}</code></pre>
-  </div>
-  <div class="heading pl-1 pt-1">
-    <div class="d-flex">
-      <div class="icon-frame">
-        <div class="icon-container">
-          <icon-stack size="10em">
-            <icon
-              type="times"
-              [fill]="['00FF00', 'FF0000', '0000FF']"
-            ></icon>
-            <icon type="ring"></icon>
-          </icon-stack>
-        </div>
-      </div>
-    </div>
+<div class="grid">
+  <div>
+    <icon-stack size="10em">
+      <icon
+        type="times"
+        [fill]="['00FF00', 'FF0000', '0000FF']"
+      ></icon>
+      <icon type="ring"></icon>
+    </icon-stack>
   </div>
 </div>
+<h4>html code</h4>
+<pre><code class="language-markup">{{iconStackHtmlCode.join('\n')}}</code></pre>
 
 <footer></footer>
 
-<div id="background"></div>

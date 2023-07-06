@@ -35,29 +35,13 @@
   height: fit-content;
 }
 
-.github {
-  font-size: 1.25em;
-  color: whitesmoke;
-
-  &:visited {
-    color: lightgrey;
-  }
-}
-
 footer {
   margin: 4em 0;
 }
 
-#background {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  z-index: -1;
-
-  background: linear-gradient(-45deg, #102000, #000000) 0 0 / 150% 150%;
-  animation: 10s ease 0s infinite gradient;
+.grid {
+  display: grid;
+  grid-template-columns: auto auto;
 }
 
 @keyframes gradient {
