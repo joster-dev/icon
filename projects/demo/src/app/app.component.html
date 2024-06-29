@@ -63,12 +63,10 @@
           <jo-color
             [(ngModel)]="fill.color"
             name="fill-{{item.type}}-{{idx}}"
-            [borderRadiusRight]="false"
           >
             fill color {{idx + 1}}
           </jo-color>
           <jo-button
-            [borderRadiusLeft]="false"
             title="Remove"
             (onClick)="item.fill.splice(idx, 1)"
           >
@@ -106,14 +104,10 @@
           <jo-color
             [(ngModel)]="stroke.color"
             name="stroke-{{item.type}}-{{idx}}"
-            [borderRadiusRight]="false"
           >
             stroke color {{idx + 1}}
           </jo-color>
-          <jo-button
-            [borderRadiusLeft]="false"
-            (onClick)="item.stroke.splice(idx, 1)"
-          >
+          <jo-button (onClick)="item.stroke.splice(idx, 1)">
             ❌
           </jo-button>
         </div>
@@ -166,4 +160,3 @@
 <pre><code class="language-markup">{{iconStackHtmlCode.join('\n')}}</code></pre>
 
 <footer></footer>
-

@@ -6,7 +6,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ChaosControlModule } from '@joster-dev/chaos-control';
 import { MarkdownModule } from 'ngx-markdown';
 
-import { IconModule } from 'dist/icon';
+import { IconModule } from 'icon';
 
 import { AppComponent } from './app.component';
 

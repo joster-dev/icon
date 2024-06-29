@@ -17,15 +17,15 @@
   width: 10em;
   height: 10em;
 
-  > icon,
-  > icon-stack {
+  >icon,
+  >icon-stack {
     position: absolute;
   }
 }
 
 .fill-container {
   display: flex;
-  align-items: flex-end;
+  gap: 0.25em;
 }
 
 .heading {
@@ -45,10 +45,12 @@ footer {
 }
 
 @keyframes gradient {
+
   0%,
   100% {
     background-position: 0% 0%;
   }
+
   50% {
     background-position: 50% 50%;
   }

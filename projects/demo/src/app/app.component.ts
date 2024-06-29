@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
-import { iconTypes, icon } from 'dist/icon';
+import { iconTypes, icon } from 'icon';
 
 @Component({
   selector: 'demo-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrl: './app.component.scss'
 })
 export class AppComponent {
   readonly iconStartText = '<icon';
