@@ -1,4 +1,5 @@
 // Public API Surface of icon
+
 export * from './lib/icon.component';
 export * from './lib/icon-stack/icon-stack.component';
 export * from './lib/icon.module';
