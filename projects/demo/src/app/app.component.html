@@ -1,162 +1,243 @@
-<markdown src="assets/README.md"></markdown>
+<header class="d-flex gap-2 my-5 justify-content-between align-items-center">
+  <div class="d-flex flex-column gap-2">
+    <h1>Icon</h1>
+    <small>Angular Library</small>
+  </div>
+  <div class="d-flex gap-2">
+    <a href="https://www.npmjs.com/package/@joster-dev/icon">
+      Package
+    </a>
+    <a href="https://github.com/joster-dev/icon">
+      Github
+    </a>
+  </div>
+</header>
 
-<h2>icon demos</h2>
-<div class="pt-2">
-  <jo-text
-    [(ngModel)]="searchTerm"
-    [maxLength]="100"
-    placeholder="Find an icon by name"
-  >demo search</jo-text>
-</div>
+<main class="d-flex flex-column gap-3">
+  <div>
+    <jo-text
+      [(ngModel)]="searchTerm"
+      [maxLength]="100"
+      placeholder="Search {{iconTypes.length}} icons..."
+    ></jo-text>
+  </div>
 
-<div class="d-flex flex-wrap f-justify-center">
-  <a
-    *ngFor="let icon of typeItems"
-    class="pt-2 pl-1 pr-1"
-    [hidden]="!filteredTypes.includes(icon.type)"
-    [href]="'#' + icon.type"
-    [title]="icon.type"
-  >
-    <jo-button>
+  <div class="d-flex gap-2 flex-wrap justify-content-center">
+    <button
+      *ngFor="let icon of iconTypes"
+      class="br-start br-end"
+      [hidden]="!filteredTypes.includes(icon)"
+      [title]="icon"
+      (click)="typeItem.type = icon"
+    >
       <icon
-        [type]="icon.type"
+        [type]="icon"
         size="3em"
         [fillOpacity]="0"
-        stroke="FFFFFF"
       ></icon>
-    </jo-button>
-  </a>
-</div>
+    </button>
+  </div>
 
-<div
-  *ngIf="filteredTypes.length === 0"
-  class="d-flex f-justify-center pb-2 pt-2"
->
-  <jo-button (onClick)="onClickRefine()">
-    Please refine your search
-  </jo-button>
-</div>
+  <div
+    *ngIf="filteredTypes.length === 0"
+    class="d-flex justify-content-center"
+  >
+    <button
+      class="br-start br-end"
+      (click)="onClickRefine()"
+    >
+      Please refine your search
+    </button>
+  </div>
 
-<div
-  *ngFor="let item of typeItems"
-  [hidden]="!filteredTypes.includes(item.type)"
->
-  <h3 [id]="item.type">
-    {{item.type}} demo
-  </h3>
-  <div class="grid">
-    <form>
-      <h4>configure</h4>
-      <div class="col-1-1">
-        <div class="fill-container">
-          <jo-button
-            [isDisabled]="item.fill.length >= 5"
-            (onClick)="item.fill.push({ color: '000000'})"
-          >
-            add fill color
-          </jo-button>
-        </div>
+  <div class="card">
+    <div class="card-header">
+      <h2>Icon Demo</h2>
+    </div>
+    <div class="card-body grid">
+      <div class="d-flex flex-column gap-3 my-3">
+        <jo-select
+          [(ngModel)]="typeItem.type"
+          required
+          [items]="iconTypeItems"
+        >
+          icon
+        </jo-select>
+        <button
+          [disabled]="typeItem.fill.length >= 5"
+          class="br-start br-end"
+          (click)="typeItem.fill.push({ color: '000000'})"
+        >
+          add fill color
+        </button>
         <div
-          *ngFor="let fill of item.fill; let idx = index"
-          class="fill-container"
+          *ngFor="let fill of typeItem.fill; let idx = index"
+          class="color-container fill"
         >
           <jo-color
             [(ngModel)]="fill.color"
-            name="fill-{{item.type}}-{{idx}}"
+            [borderRadiusRight]="false"
+            name="fill-{{typeItem.type}}-{{idx}}"
           >
             fill color {{idx + 1}}
           </jo-color>
-          <jo-button
-            title="Remove"
-            (onClick)="item.fill.splice(idx, 1)"
+          <button
+            title="Transparent"
+            [class.active]="fill.color === null"
+            (click)="fill.color = null"
           >
-            ❌
-          </jo-button>
+            <icon
+              type="clear"
+              size="1em"
+            ></icon>
+          </button>
+          <button
+            title="Remove"
+            class="br-end"
+            (click)="typeItem.fill.splice(idx, 1)"
+          >
+            <icon
+              type="times"
+              size="1em"
+              [fill]="[null, 'current']"
+              [fillRotate]="90"
+            ></icon>
+          </button>
         </div>
         <jo-choice
-          [(ngModel)]="item.fillRotate"
+          [(ngModel)]="typeItem.fillRotate"
           name="fillRotate"
-          [required]="true"
+          required
           [items]="rotateItems"
         >
           fill rotate
         </jo-choice>
         <jo-choice
-          [(ngModel)]="item.fillOpacity"
+          [(ngModel)]="typeItem.fillOpacity"
           name="fillOpacity"
-          [required]="true"
+          required
           [items]="opacityItems"
         >
           fill opacity
         </jo-choice>
-        <div class="fill-container">
-          <jo-button
-            [isDisabled]="item.stroke.length >= 5"
-            (onClick)="item.stroke.push({ color: '000000'})"
-          >
-            add stroke color
-          </jo-button>
-        </div>
+        <button
+          [disabled]="typeItem.stroke.length >= 5"
+          class="br-start br-end"
+          (click)="typeItem.stroke.push({ color: '000000'})"
+        >
+          add stroke color
+        </button>
         <div
-          *ngFor="let stroke of item.stroke; let idx = index"
-          class="fill-container"
+          *ngFor="let stroke of typeItem.stroke; let idx = index"
+          class="color-container"
         >
           <jo-color
             [(ngModel)]="stroke.color"
-            name="stroke-{{item.type}}-{{idx}}"
+            [borderRadiusRight]="false"
+            name="stroke-{{typeItem.type}}-{{idx}}"
           >
             stroke color {{idx + 1}}
           </jo-color>
-          <jo-button (onClick)="item.stroke.splice(idx, 1)">
-            ❌
-          </jo-button>
+          <button
+            title="Remove"
+            class="br-end"
+            (click)="typeItem.stroke.splice(idx, 1)"
+          >
+            <icon
+              type="times"
+              size="1em"
+              [fill]="[null, 'current']"
+              [fillRotate]="90"
+            ></icon>
+          </button>
         </div>
         <jo-choice
-          [(ngModel)]="item.strokeRotate"
+          [(ngModel)]="typeItem.strokeRotate"
           name="strokeRotate"
-          [required]="true"
+          required
           [items]="rotateItems"
         >
           stroke rotate
         </jo-choice>
         <jo-choice
-          [(ngModel)]="item.spin"
+          [(ngModel)]="typeItem.spin"
           name="spin"
           [items]="spinItems"
         >
           spin
         </jo-choice>
       </div>
-    </form>
-    <div class="heading p-1">
-      <icon
-        [type]="item.type"
-        [fill]="mapColors(item.fill)"
-        [fillRotate]="item.fillRotate"
-        [fillOpacity]="item.fillOpacity"
-        [stroke]="mapColors(item.stroke)"
-        [strokeRotate]="item.strokeRotate"
-        [spin]="item.spin"
-      ></icon>
+      <div class="heading pt-3">
+        <icon
+          [type]="typeItem.type"
+          [fill]="mapColors(typeItem.fill)"
+          [fillRotate]="typeItem.fillRotate"
+          [fillOpacity]="typeItem.fillOpacity"
+          [stroke]="mapColors(typeItem.stroke)"
+          [strokeRotate]="typeItem.strokeRotate"
+          [spin]="typeItem.spin"
+        ></icon>
+      </div>
     </div>
   </div>
-  <h4>{{item.type}} html code</h4>
-  <pre><code class="language-markup">{{htmlCode(item).join('\n')}}</code></pre>
-</div>
 
-<h3>icon-stack demo</h3>
-<div class="grid">
-  <div>
-    <icon-stack size="10em">
-      <icon
-        type="times"
-        [fill]="['00FF00', 'FF0000', '0000FF']"
-      ></icon>
-      <icon type="ring"></icon>
-    </icon-stack>
+  <div class="card">
+    <div class="card-header">
+      <h2>Icon Stack Demo</h2>
+    </div>
+    <div class="card-body grid">
+      <div class="d-flex flex-column gap-3 my-3">
+        <button
+          class="br-start br-end"
+          (click)="onClickAddIcon()"
+        >
+          add icon
+        </button>
+        <div
+          *ngFor="let type of iconStackDemo; let idx = index"
+          class="type-container"
+        >
+          <jo-select
+            [(ngModel)]="iconStackDemo[idx]"
+            [items]="iconTypeItems"
+            required
+            [borderRadiusRight]="false"
+          >
+            icon {{idx + 1}}
+          </jo-select>
+          <button
+            title="Remove"
+            class="br-end d-flex"
+            (click)="iconStackDemo.splice(idx, 1)"
+          >
+            <icon
+              type="times"
+              size="1em"
+              [fill]="[null, 'current']"
+              [fillRotate]="90"
+            ></icon>
+          </button>
+        </div>
+      </div>
+      <div class="heading p-1">
+        <icon-stack>
+          <icon
+            *ngFor="let type of iconStackDemo"
+            [type]="type"
+            [fill]="mapColors(typeItem.fill)"
+            [fillRotate]="typeItem.fillRotate"
+            [fillOpacity]="typeItem.fillOpacity"
+            [stroke]="mapColors(typeItem.stroke)"
+            [strokeRotate]="typeItem.strokeRotate"
+          ></icon>
+        </icon-stack>
+      </div>
+    </div>
   </div>
-</div>
-<h4>html code</h4>
-<pre><code class="language-markup">{{iconStackHtmlCode.join('\n')}}</code></pre>
+</main>
 
-<footer></footer>
+<footer class="d-flex my-5 justify-content-end">
+  <a href="https://joster-dev.github.io/">
+    © Jacob Osterhout 2024
+  </a>
+</footer>

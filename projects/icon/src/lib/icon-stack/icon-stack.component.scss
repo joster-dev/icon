@@ -1,7 +1,8 @@
 :host {
   display: grid;
   grid-template-columns: 1fr;
-  ::ng-deep > icon {
+
+  ::ng-deep>icon {
     grid-row-start: 1;
     grid-column-start: 1;
     display: flex;

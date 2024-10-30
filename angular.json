@@ -79,16 +79,9 @@
               }
             ],
             "styles": [
-              "projects/demo/src/styles.scss",
-              "node_modules/prismjs/themes/prism-okaidia.css"
+              "projects/demo/src/styles.scss"
             ],
-            "scripts": [
-              "node_modules/marked/marked.min.js",
-              "node_modules/prismjs/prism.js",
-              "node_modules/prismjs/components/prism-bash.min.js",
-              "node_modules/prismjs/components/prism-diff.min.js",
-              "node_modules/prismjs/components/prism-markup.min.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {

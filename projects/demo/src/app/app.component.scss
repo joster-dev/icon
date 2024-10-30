@@ -1,11 +1,10 @@
-.row {
-  display: flex;
-  justify-content: center;
+header a,
+footer a {
+  padding: 1em;
+  text-decoration: none;
+  border-radius: 0.5em;
 }
 
-.flex-1 {
-  flex: 1;
-}
 
 .icon-frame {
   border-radius: 0.5em;
@@ -23,35 +22,53 @@
   }
 }
 
-.fill-container {
+.color-container {
   display: flex;
-  gap: 0.25em;
+  align-items: flex-end;
+
+  jo-color ::ng-deep input {
+    border-right: none !important;
+  }
+
+  &.fill button:nth-last-child(2) {
+    border-left: none;
+    border-right: none;
+  }
+
+  button:last-child {
+    border-left: none;
+  }
+}
+
+.type-container {
+  display: flex;
+  align-items: flex-end;
+
+  jo-select {
+    flex: 1;
+  }
+
+  jo-select ::ng-deep div[role="group"] button:last-child {
+    border-right: none !important;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  button:last-child {
+    border-left: none;
+  }
 }
 
 .heading {
   display: flex;
+  justify-content: center;
   position: sticky;
   top: 0;
   height: fit-content;
 }
 
-footer {
-  margin: 4em 0;
-}
-
 .grid {
   display: grid;
-  grid-template-columns: auto auto;
-}
-
-@keyframes gradient {
-
-  0%,
-  100% {
-    background-position: 0% 0%;
-  }
-
-  50% {
-    background-position: 50% 50%;
-  }
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
 }

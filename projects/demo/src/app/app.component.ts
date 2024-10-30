@@ -14,21 +14,11 @@ export class AppComponent {
   readonly iconStackText = '...</icon-stack>';
 
   searchTerm: string | null = null;
-  typeItems: IconTypeItem[] = iconTypes.map(iconType => ({
-    type: iconType,
-    fill: [
-      { color: '700024' },
-      { color: '247000' },
-      { color: '002470' },
-    ],
-    fillRotate: 0,
-    fillOpacity: 1,
-    stroke: [
-      { color: 'FFFFFF' }
-    ],
-    strokeRotate: 0,
-    spin: null
-  }));
+  typeItem = new IconTypeItem('circle');
+  iconStackDemo: icon[] = ['times', 'ring'];
+
+  iconTypes = iconTypes;
+  iconTypeItems = iconTypes.map(item => ({ key: item, value: item }));
   rotateItems = [
     { key: 0, value: '0' },
     { key: 45, value: '45' },
@@ -46,19 +36,12 @@ export class AppComponent {
 
   constructor() { }
 
-  get filteredTypes(): string[] {
+  get filteredTypes() {
     if (this.searchTerm === null)
-      return this.typeItems.map(item => item.type);
+      return this.iconTypes;
 
-    return this.typeItems
-      .filter(item => item.type.toLowerCase().includes(this.searchTerm!.toLowerCase()))
-      .map(item => item.type);
-  }
-
-  get types() {
-    return iconTypes
-      .map(type => `'${type}'`)
-      .join(' | ');
+    return this.iconTypes
+      .filter(item => item.toLowerCase().includes(this.searchTerm!.toLowerCase()));
   }
 
   get iconStackHtmlCode() {
@@ -77,8 +60,16 @@ export class AppComponent {
     return lines;
   }
 
+  onClickIcon(icon: icon) {
+    this.typeItem.type = icon
+  }
+
   onClickRefine() {
     this.searchTerm = null;
+  }
+
+  onClickAddIcon() {
+    this.iconStackDemo.push('circle');
   }
 
   mapColors(items: { color: string | null }[]) {
@@ -94,7 +85,9 @@ export class AppComponent {
       `[strokeRotate]="${item.strokeRotate}"`,
       `[spin]="${item.spin}"`,
       `></icon>`
-    ]
+    ];
+
+
     lines = lines.map((line, index) => {
       if (index > 0 && index < lines.length - 1)
         return `  ${line}`;
@@ -104,12 +97,21 @@ export class AppComponent {
   }
 }
 
-interface IconTypeItem {
-  type: icon;
-  fill: { color: string | null }[];
-  fillRotate: number;
-  fillOpacity: number;
-  stroke: { color: string }[];
-  strokeRotate: number;
-  spin: 'x' | 'y' | null;
+class IconTypeItem {
+  fill: { color: string | null }[] = [
+    { color: '700024' },
+    { color: '000000' },
+    { color: '002470' },
+  ];
+  fillRotate = 0;
+  fillOpacity = 1;
+  stroke = [
+    { color: 'FFFFFF' }
+  ];
+  strokeRotate = 0;
+  spin: 'x' | 'y' | null = null;
+
+  constructor(
+    public type: icon,
+  ) { }
 }
