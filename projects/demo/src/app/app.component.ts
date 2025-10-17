@@ -3,9 +3,10 @@ import { Component } from '@angular/core';
 import { iconTypes, icon } from 'icon';
 
 @Component({
-  selector: 'demo-root',
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+    selector: 'demo-root',
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss',
+    standalone: false
 })
 export class AppComponent {
   readonly iconStartText = '<icon';
