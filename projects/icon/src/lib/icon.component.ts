@@ -4,9 +4,10 @@ import { iconTypes } from './icon-types.const';
 import { SizeDirective } from './size.directive';
 
 @Component({
-  selector: 'icon[type]',
-  templateUrl: './icon.component.html',
-  styleUrls: ['./icon.component.scss'],
+    selector: 'icon[type]',
+    templateUrl: './icon.component.html',
+    styleUrls: ['./icon.component.scss'],
+    standalone: false
 })
 export class IconComponent extends SizeDirective {
   @Input()

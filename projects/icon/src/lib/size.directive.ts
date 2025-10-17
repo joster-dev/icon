@@ -2,7 +2,8 @@ import { Directive, Input, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Directive({
-  selector: 'size'
+    selector: 'size',
+    standalone: false
 })
 export class SizeDirective implements OnDestroy {
   @Input()
