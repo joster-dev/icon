@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-`@joster-dev/icon` is an Angular 18 library that renders SVG icons as inline `<svg>` markup, with per-icon fill/stroke gradient and animation support. This is an Angular CLI **multi-project workspace** with two projects defined in [angular.json](angular.json):
+`@joster-dev/icon` is an Angular 22 library that renders SVG icons as inline `<svg>` markup, with per-icon fill/stroke gradient and animation support. This is an Angular CLI **multi-project workspace** with two projects defined in [angular.json](angular.json):
 
 - `icon` (`projects/icon`) — the publishable library (`projectType: library`, built with ng-packagr). Component prefix `jo`.
 - `demo` (`projects/demo`) — a demo/docs app (`projectType: application`) deployed to GitHub Pages. Component prefix `demo`.
@@ -40,8 +40,8 @@ Note: `npm run _copy-license` (part of `npm run package`) shells out to `powersh
 
 The entire icon set lives in **one component**, not one component per icon.
 
-- [icon.component.ts](projects/icon/src/lib/icon.component.ts) + [icon.component.html](projects/icon/src/lib/icon.component.html): a single `IconComponent` (selector `icon[type]`) renders a `<svg viewBox="0 0 100 100">`. The template is a flat list of SVG primitives each guarded by `*ngIf="type === '...'"` — adding an icon means adding a new shape block here, not a new file.
-- [icon-types.const.ts](projects/icon/src/lib/icon-types.const.ts): the `iconTypes` array (`as const`) is the **single source of truth** for valid icon names. [icon.type.ts](projects/icon/src/lib/icon.type.ts) derives the `icon` union type from it. To add an icon: add the name here AND a matching `*ngIf` block in the template.
+- [icon.component.ts](projects/icon/src/lib/icon.component.ts) + [icon.component.html](projects/icon/src/lib/icon.component.html): a single `IconComponent` (selector `icon[type]`) renders a `<svg viewBox="0 0 100 100">`. The template is a flat list of SVG primitives each guarded by `@if (type === '...')` (block control flow) — adding an icon means adding a new shape block here, not a new file.
+- [icon-types.const.ts](projects/icon/src/lib/icon-types.const.ts): the `iconTypes` array (`as const`) is the **single source of truth** for valid icon names. [icon.type.ts](projects/icon/src/lib/icon.type.ts) derives the `icon` union type from it. To add an icon: add the name here AND a matching `@if` block in the template.
 - [size.directive.ts](projects/icon/src/lib/size.directive.ts): `SizeDirective` holds the `size` input and emits `sizeChangesSubject`. Both `IconComponent` and `IconStackComponent` **extend** it to share sizing behavior.
 - [icon-stack/icon-stack.component.ts](projects/icon/src/lib/icon-stack/icon-stack.component.ts): `IconStackComponent` (selector `icon-stack`) overlays multiple icons; it subscribes to `sizeChangesSubject` to propagate its size to host width/height.
 - [icon.module.ts](projects/icon/src/lib/icon.module.ts): `IconModule` declares/exports the components (consumers import this NgModule — the library is module-based, not standalone).

@@ -33,11 +33,11 @@ describe('IconStackComponent', () => {
     });
 
     it('should equal width', () => {
-      expect(container.styles.width).toEqual(size);
+      expect(container.styles['width']).toEqual(size);
     });
 
     it('should equal height', () => {
-      expect(container.styles.height).toEqual(size);
+      expect(container.styles['height']).toEqual(size);
     });
   });
 });

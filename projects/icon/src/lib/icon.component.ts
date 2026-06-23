@@ -1,12 +1,14 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { icon } from './icon.type';
 import { iconTypes } from './icon-types.const';
 import { SizeDirective } from './size.directive';
 
 @Component({
-  selector: 'icon[type]',
-  templateUrl: './icon.component.html',
-  styleUrls: ['./icon.component.scss'],
+    selector: 'icon[type]',
+    templateUrl: './icon.component.html',
+    styleUrls: ['./icon.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class IconComponent extends SizeDirective {
   @Input()

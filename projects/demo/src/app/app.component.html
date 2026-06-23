@@ -23,32 +23,34 @@
   </div>
 
   <div class="d-flex gap-2 flex-wrap justify-content-center">
-    <button
-      *ngFor="let icon of iconTypes"
-      class="br-start br-end"
-      [hidden]="!filteredTypes.includes(icon)"
-      [title]="icon"
-      (click)="typeItem.type = icon"
-    >
-      <icon
-        [type]="icon"
-        size="3em"
-        [fillOpacity]="0"
-      ></icon>
-    </button>
+    @for (icon of iconTypes; track icon) {
+      <button
+        class="br-start br-end"
+        [hidden]="!filteredTypes.includes(icon)"
+        [title]="icon"
+        (click)="typeItem.type = icon"
+        >
+        <icon
+          [type]="icon"
+          size="3em"
+          [fillOpacity]="0"
+        ></icon>
+      </button>
+    }
   </div>
 
-  <div
-    *ngIf="filteredTypes.length === 0"
-    class="d-flex justify-content-center"
-  >
-    <button
-      class="br-start br-end"
-      (click)="onClickRefine()"
-    >
-      Please refine your search
-    </button>
-  </div>
+  @if (filteredTypes.length === 0) {
+    <div
+      class="d-flex justify-content-center"
+      >
+      <button
+        class="br-start br-end"
+        (click)="onClickRefine()"
+        >
+        Please refine your search
+      </button>
+    </div>
+  }
 
   <div class="card">
     <div class="card-header">
@@ -60,56 +62,57 @@
           [(ngModel)]="typeItem.type"
           required
           [items]="iconTypeItems"
-        >
+          >
           icon
         </jo-select>
         <button
           [disabled]="typeItem.fill.length >= 5"
           class="br-start br-end"
           (click)="typeItem.fill.push({ color: '000000'})"
-        >
+          >
           add fill color
         </button>
-        <div
-          *ngFor="let fill of typeItem.fill; let idx = index"
-          class="color-container fill"
-        >
-          <jo-color
-            [(ngModel)]="fill.color"
-            [borderRadiusRight]="false"
-            name="fill-{{typeItem.type}}-{{idx}}"
-          >
-            fill color {{idx + 1}}
-          </jo-color>
-          <button
-            title="Transparent"
-            [class.active]="fill.color === null"
-            (click)="fill.color = null"
-          >
-            <icon
-              type="clear"
-              size="1em"
-            ></icon>
-          </button>
-          <button
-            title="Remove"
-            class="br-end"
-            (click)="typeItem.fill.splice(idx, 1)"
-          >
-            <icon
-              type="times"
-              size="1em"
-              [fill]="[null, 'current']"
-              [fillRotate]="90"
-            ></icon>
-          </button>
-        </div>
+        @for (fill of typeItem.fill; track fill; let idx = $index) {
+          <div
+            class="color-container fill"
+            >
+            <jo-color
+              [(ngModel)]="fill.color"
+              [borderRadiusRight]="false"
+              name="fill-{{typeItem.type}}-{{idx}}"
+              >
+              fill color {{idx + 1}}
+            </jo-color>
+            <button
+              title="Transparent"
+              [class.active]="fill.color === null"
+              (click)="fill.color = null"
+              >
+              <icon
+                type="clear"
+                size="1em"
+              ></icon>
+            </button>
+            <button
+              title="Remove"
+              class="br-end"
+              (click)="typeItem.fill.splice(idx, 1)"
+              >
+              <icon
+                type="times"
+                size="1em"
+                [fill]="[null, 'current']"
+                [fillRotate]="90"
+              ></icon>
+            </button>
+          </div>
+        }
         <jo-choice
           [(ngModel)]="typeItem.fillRotate"
           name="fillRotate"
           required
           [items]="rotateItems"
-        >
+          >
           fill rotate
         </jo-choice>
         <jo-choice
@@ -117,53 +120,54 @@
           name="fillOpacity"
           required
           [items]="opacityItems"
-        >
+          >
           fill opacity
         </jo-choice>
         <button
           [disabled]="typeItem.stroke.length >= 5"
           class="br-start br-end"
           (click)="typeItem.stroke.push({ color: '000000'})"
-        >
+          >
           add stroke color
         </button>
-        <div
-          *ngFor="let stroke of typeItem.stroke; let idx = index"
-          class="color-container"
-        >
-          <jo-color
-            [(ngModel)]="stroke.color"
-            [borderRadiusRight]="false"
-            name="stroke-{{typeItem.type}}-{{idx}}"
-          >
-            stroke color {{idx + 1}}
-          </jo-color>
-          <button
-            title="Remove"
-            class="br-end"
-            (click)="typeItem.stroke.splice(idx, 1)"
-          >
-            <icon
-              type="times"
-              size="1em"
-              [fill]="[null, 'current']"
-              [fillRotate]="90"
-            ></icon>
-          </button>
-        </div>
+        @for (stroke of typeItem.stroke; track stroke; let idx = $index) {
+          <div
+            class="color-container"
+            >
+            <jo-color
+              [(ngModel)]="stroke.color"
+              [borderRadiusRight]="false"
+              name="stroke-{{typeItem.type}}-{{idx}}"
+              >
+              stroke color {{idx + 1}}
+            </jo-color>
+            <button
+              title="Remove"
+              class="br-end"
+              (click)="typeItem.stroke.splice(idx, 1)"
+              >
+              <icon
+                type="times"
+                size="1em"
+                [fill]="[null, 'current']"
+                [fillRotate]="90"
+              ></icon>
+            </button>
+          </div>
+        }
         <jo-choice
           [(ngModel)]="typeItem.strokeRotate"
           name="strokeRotate"
           required
           [items]="rotateItems"
-        >
+          >
           stroke rotate
         </jo-choice>
         <jo-choice
           [(ngModel)]="typeItem.spin"
           name="spin"
           [items]="spinItems"
-        >
+          >
           spin
         </jo-choice>
       </div>
@@ -190,46 +194,48 @@
         <button
           class="br-start br-end"
           (click)="onClickAddIcon()"
-        >
+          >
           add icon
         </button>
-        <div
-          *ngFor="let type of iconStackDemo; let idx = index"
-          class="type-container"
-        >
-          <jo-select
-            [(ngModel)]="iconStackDemo[idx]"
-            [items]="iconTypeItems"
-            required
-            [borderRadiusRight]="false"
-          >
-            icon {{idx + 1}}
-          </jo-select>
-          <button
-            title="Remove"
-            class="br-end d-flex"
-            (click)="iconStackDemo.splice(idx, 1)"
-          >
-            <icon
-              type="times"
-              size="1em"
-              [fill]="[null, 'current']"
-              [fillRotate]="90"
-            ></icon>
-          </button>
-        </div>
+        @for (type of iconStackDemo; track type; let idx = $index) {
+          <div
+            class="type-container"
+            >
+            <jo-select
+              [(ngModel)]="iconStackDemo[idx]"
+              [items]="iconTypeItems"
+              required
+              [borderRadiusRight]="false"
+              >
+              icon {{idx + 1}}
+            </jo-select>
+            <button
+              title="Remove"
+              class="br-end d-flex"
+              (click)="iconStackDemo.splice(idx, 1)"
+              >
+              <icon
+                type="times"
+                size="1em"
+                [fill]="[null, 'current']"
+                [fillRotate]="90"
+              ></icon>
+            </button>
+          </div>
+        }
       </div>
       <div class="heading p-1">
         <icon-stack>
-          <icon
-            *ngFor="let type of iconStackDemo"
-            [type]="type"
-            [fill]="mapColors(typeItem.fill)"
-            [fillRotate]="typeItem.fillRotate"
-            [fillOpacity]="typeItem.fillOpacity"
-            [stroke]="mapColors(typeItem.stroke)"
-            [strokeRotate]="typeItem.strokeRotate"
-          ></icon>
+          @for (type of iconStackDemo; track type) {
+            <icon
+              [type]="type"
+              [fill]="mapColors(typeItem.fill)"
+              [fillRotate]="typeItem.fillRotate"
+              [fillOpacity]="typeItem.fillOpacity"
+              [stroke]="mapColors(typeItem.stroke)"
+              [strokeRotate]="typeItem.strokeRotate"
+            ></icon>
+          }
         </icon-stack>
       </div>
     </div>
