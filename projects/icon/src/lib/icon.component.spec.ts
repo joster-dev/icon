@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 import { IconComponent } from './icon.component';
 
@@ -8,12 +9,14 @@ describe('IconComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [IconComponent]
+      imports: [IconComponent],
+      providers: [provideZonelessChangeDetection()]
     })
       .compileComponents();
 
     fixture = TestBed.createComponent(IconComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('type', 'circle');
     fixture.detectChanges();
   });
 

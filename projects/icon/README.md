@@ -9,13 +9,14 @@ update your `package.json`
 ```bash
 npm install @joster-dev/icon --save
 ```
-import the module
+import the standalone components where you use them
 ```diff
-+ import { IconModule } from '@joster-dev/icon';
++ import { IconComponent, IconStackComponent } from '@joster-dev/icon';
 
-@NgModule({
+@Component({
   imports: [
-+    IconModule
++    IconComponent,
++    IconStackComponent
   ],
 })
 ```

@@ -40,11 +40,12 @@ Note: `npm run _copy-license` (part of `npm run package`) shells out to `powersh
 
 The entire icon set lives in **one component**, not one component per icon.
 
-- [icon.component.ts](projects/icon/src/lib/icon.component.ts) + [icon.component.html](projects/icon/src/lib/icon.component.html): a single `IconComponent` (selector `icon[type]`) renders a `<svg viewBox="0 0 100 100">`. The template is a flat list of SVG primitives each guarded by `@if (type === '...')` (block control flow) — adding an icon means adding a new shape block here, not a new file.
+The library is **standalone** (Angular 22): there is no `IconModule`. Consumers import `IconComponent` / `IconStackComponent` directly into a standalone component's `imports`. Components are `ChangeDetectionStrategy.OnPush` and the workspace is **zoneless** (no zone.js; the demo bootstraps with `provideZonelessChangeDetection()`).
+
+- [icon.component.ts](projects/icon/src/lib/icon.component.ts) + [icon.component.html](projects/icon/src/lib/icon.component.html): a single `IconComponent` (selector `icon[type]`) renders a `<svg viewBox="0 0 100 100">`. The template is a flat list of SVG primitives each guarded by `@if (type() === '...')` (block control flow, signal read) — adding an icon means adding a new shape block here, not a new file.
 - [icon-types.const.ts](projects/icon/src/lib/icon-types.const.ts): the `iconTypes` array (`as const`) is the **single source of truth** for valid icon names. [icon.type.ts](projects/icon/src/lib/icon.type.ts) derives the `icon` union type from it. To add an icon: add the name here AND a matching `@if` block in the template.
-- [size.directive.ts](projects/icon/src/lib/size.directive.ts): `SizeDirective` holds the `size` input and emits `sizeChangesSubject`. Both `IconComponent` and `IconStackComponent` **extend** it to share sizing behavior.
-- [icon-stack/icon-stack.component.ts](projects/icon/src/lib/icon-stack/icon-stack.component.ts): `IconStackComponent` (selector `icon-stack`) overlays multiple icons; it subscribes to `sizeChangesSubject` to propagate its size to host width/height.
-- [icon.module.ts](projects/icon/src/lib/icon.module.ts): `IconModule` declares/exports the components (consumers import this NgModule — the library is module-based, not standalone).
+- [size.directive.ts](projects/icon/src/lib/size.directive.ts): `SizeDirective` is a selector-less `@Directive()` base exposing a single `size` signal `input()`. Both `IconComponent` and `IconStackComponent` **extend** it to inherit the input.
+- [icon-stack/icon-stack.component.ts](projects/icon/src/lib/icon-stack/icon-stack.component.ts): `IconStackComponent` (selector `icon-stack`) overlays multiple icons; it binds the inherited `size()` to host width/height via the `host` metadata object (no RxJS, no `@HostBinding`).
 - [public-api.ts](projects/icon/src/public-api.ts): the library's public surface; ng-packagr's `entryFile`. Anything consumers should import must be re-exported here.
 
 ### Gradient/color model
@@ -53,10 +54,10 @@ The entire icon set lives in **one component**, not one component per icon.
 
 ### Input validation convention
 
-Every `@Input` uses an explicit getter/setter pair backed by a `_`-prefixed field. Setters coerce types (e.g. string→array, string→number) and `throw new Error('expected [input] to be: ...')` on invalid values rather than failing silently. Follow this pattern when adding inputs.
+Every input is a signal `input()` with a **transform function** (e.g. `input(0, { transform: coerceRotate('fillRotate') })`). The transforms coerce types (string→array, string→number) and `throw new Error('expected [input] to be: ...')` on invalid values rather than failing silently. Templates read inputs as signals — `type()`, `fill()`, `size()`. Follow this pattern when adding inputs.
 
 ## Conventions
 
 - Strict TypeScript is on, plus `noPropertyAccessFromIndexSignature`, `noImplicitOverride`, `noImplicitReturns`. Angular `strictTemplates` is enabled — template type errors fail the build.
-- Library components use SCSS (`schematics` default). Demo components are configured as **non-standalone** (NgModule-based) via angular.json schematics.
-- `useDefineForClassFields: false` + `experimentalDecorators` — relevant if touching field initialization order around decorated inputs.
+- Library and demo components are **standalone** with `OnPush`; the demo bootstraps via `bootstrapApplication` in [main.ts](projects/demo/src/main.ts). The workspace is zoneless (no zone.js polyfill in [angular.json](angular.json)); tests provide `provideZonelessChangeDetection()` in their `TestBed`.
+- Library components use SCSS (`schematics` default).

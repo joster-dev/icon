@@ -1,13 +1,16 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
-import { iconTypes, icon } from 'icon';
+import { ChaosControlModule } from '@joster-dev/chaos-control';
+
+import { iconTypes, icon, IconComponent, IconStackComponent } from 'icon';
 
 @Component({
     selector: 'demo-root',
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
-    changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [FormsModule, ChaosControlModule, IconComponent, IconStackComponent]
 })
 export class AppComponent {
   readonly iconStartText = '<icon';
