@@ -38,6 +38,8 @@ function coerceOpacity(value: number): number {
   return value;
 }
 
+let nextId = 0;
+
 @Component({
   selector: 'icon[type]',
   templateUrl: './icon.component.html',
@@ -53,7 +55,7 @@ export class IconComponent extends SizeDirective {
   readonly strokeRotate = input<number, string | number>(0, { transform: coerceRotate('strokeRotate') });
   readonly spin = input<'x' | 'y' | 'z' | null>(null);
 
-  readonly id = `${Math.random().toString(36).substring(2, 13)}`;
+  readonly id = `${nextId++}`;
 
   linearGradientStopColor(item: string | null) {
     if (item === 'current')

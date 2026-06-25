@@ -7,378 +7,222 @@
   [class.spin-x]="spin() === 'x'"
   [class.spin-y]="spin() === 'y'"
   [class.spin-z]="spin() === 'z'"
-  >
+>
   <linearGradient
     id="fill-gradient-{{id}}"
     attr.gradientTransform="rotate({{fillRotate()}}) translate({{(fillRotate() / 180) % 0.5}})"
-    >
+  >
     @for (item of fill(); track item; let idx = $index) {
-      <stop
-        [attr.offset]="linearGradientStopOffset(idx, fill())"
-        [attr.stop-color]="linearGradientStopColor(item)"
-        [attr.stop-opacity]="linearGradientStopOpacity(item)"
-        />
+    <stop
+      [attr.offset]="linearGradientStopOffset(idx, fill())"
+      [attr.stop-color]="linearGradientStopColor(item)"
+      [attr.stop-opacity]="linearGradientStopOpacity(item)"
+    />
     }
   </linearGradient>
   <linearGradient
     id="stroke-gradient-{{id}}"
     attr.gradientTransform="rotate({{strokeRotate()}}) translate({{(strokeRotate() / 180) % 0.5}})"
-    >
+  >
     @for (item of stroke(); track item; let idx = $index) {
-      <stop
-        [attr.offset]="linearGradientStopOffset(idx, stroke())"
-        [attr.stop-color]="linearGradientStopColor(item)"
-        />
+    <stop
+      [attr.offset]="linearGradientStopOffset(idx, stroke())"
+      [attr.stop-color]="linearGradientStopColor(item)"
+    />
     }
   </linearGradient>
-  @if (type() === 'circle') {
+  <g
+    attr.fill="url(#fill-gradient-{{id}})"
+    [attr.fill-opacity]="fillOpacity()"
+    attr.stroke="url(#stroke-gradient-{{id}})"
+    stroke-width="5"
+  >
+    @switch (type()) {
+    @case ('circle') {
     <circle
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
       cx="50"
       cy="50"
       r="47.5"
-      />
-  }
-  @if (type() === 'dot') {
+    />
+    }
+    @case ('dot') {
     <circle
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
       cx="50"
       cy="50"
       r="30"
-      />
-  }
-  @if (type() === 'ring') {
-    <path
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
-      d="M50,2.5C23.767,2.5,2.5,23.767,2.5,50S23.767,97.5,50,97.5S97.5,76.233,97.5,50S76.233,2.5,50,2.5z M50,80c-16.568,0-30-13.432-30-30c0-16.568,13.432-30,30-30s30,13.432,30,30C80,66.568,66.568,80,50,80z"
-      />
-  }
-  @if (type() === 'square') {
+    />
+    }
+    @case ('ring') {
+    <path d="M50,2.5C23.767,2.5,2.5,23.767,2.5,50S23.767,97.5,50,97.5S97.5,76.233,97.5,50S76.233,2.5,50,2.5z M50,80c-16.568,0-30-13.432-30-30c0-16.568,13.432-30,30-30s30,13.432,30,30C80,66.568,66.568,80,50,80z" />
+    }
+    @case ('square') {
     <rect
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
       x="2.5"
       y="2.5"
       width="95"
       height="95"
-      />
-  }
-  @if (type() === 'squircle') {
+    />
+    }
+    @case ('squircle') {
     <rect
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
       x="2.5"
       y="2.5"
       width="95"
       height="95"
       rx="15"
-      />
-  }
-  @if (type() === 'minus') {
+    />
+    }
+    @case ('check') {
+    <polygon points="96.465,27.488 82.322,13.347,37.257,58.367 17.675,38.785 3.535,52.928 37.259,86.652" />
+    }
+    @case ('times') {
+    <polygon points="64.143,50 96.465,17.678 82.323,3.535,50,35.857 17.678,3.535 3.535,17.676 35.858,50 3.535,82.323 17.678,96.465 50.001,64.142 82.323,96.465 96.465,82.322" />
+    }
+    @case ('plus') {
+    <polygon points="97.5,37.5 62.5,37.5 62.5,2.5 37.5,2.5 37.5,37.5 2.5,37.5 2.5,62.5 37.5,62.5 37.5,97.5 62.5,97.5 62.5,62.5 97.5,62.5" />
+    }
+    @case ('minus') {
     <rect
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
       x="2.5"
       y="37.5"
       width="95"
       height="25"
-      />
-  }
-  @if (type() === 'check') {
-    <polygon
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
-      points="96.465,27.488 82.322,13.347,37.257,58.367 17.675,38.785 3.535,52.928 37.259,86.652"
-      />
-  }
-  @if (type() === 'times') {
-    <polygon
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
-      points="64.143,50 96.465,17.678 82.323,3.535,50,35.857 17.678,3.535 3.535,17.676 35.858,50 3.535,82.323 17.678,96.465 50.001,64.142 82.323,96.465 96.465,82.322"
-      />
-  }
-  @if (type() === 'plus') {
-    <polygon
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
-      points="97.5,37.5 62.5,37.5 62.5,2.5 37.5,2.5 37.5,37.5 2.5,37.5 2.5,62.5 37.5,62.5 37.5,97.5 62.5,97.5 62.5,62.5 97.5,62.5"
-      />
-  }
-  @if (type() === 'row') {
-    <polygon
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
-      points="96,50 66.5,20 66.5,37.5 33.5,37.5 33.5,20 4,50 33.5,80 33.5,62.5 66.5,62.5 66.5,80"
-      />
-  }
-  @if (type() === 'column') {
-    <polygon
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
-      points="62.5,33.535 80,33.535 50,3.535 20,33.535 37.5,33.535 37.5,66.465 20,66.465 50,96.465 80,66.465 62.5,66.465"
-      />
-  }
-  @if (type() === 'flag') {
-    <polygon
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
-      points="93,33.86 22.5,7.368 22.5,2.5 2.5,2.5 2.5,97.5 22.5,97.5 22.5,59.915"
-      />
-  }
-  @if (type() === 'gear') {
-    <path
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
-      d="M96.35,39.625C95.178,34.369,93.14,29.44,90.385,25H80l-5-5V9.618C70.554,6.859,65.617,4.82,60.353,3.65L56.61,7.761L50,15.022l-6.61-7.261L39.647,3.65C34.382,4.82,29.447,6.859,25,9.618V20l-5,5H9.615C6.86,29.44,4.822,34.369,3.65,39.625l4.165,3.764L15.132,50l-7.316,6.61L3.65,60.375C4.822,65.631,6.86,70.56,9.615,75H20l5,5v10.382c4.441,2.755,9.371,4.793,14.628,5.964l3.761-4.162L50,84.867l6.61,7.316l3.761,4.162c5.258-1.171,10.188-3.209,14.629-5.964V80l5-5h10.385c2.755-4.44,4.793-9.369,5.965-14.625l-4.165-3.765L84.869,50l7.315-6.611L96.35,39.625z M50,72.5c-12.427,0-22.5-10.073-22.5-22.5c0-12.426,10.073-22.5,22.5-22.5S72.5,37.574,72.5,50C72.5,62.427,62.427,72.5,50,72.5z"
-      />
-  }
-  @if (type() === 'star') {
-    <polygon
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
-    points="50,9.91 62.022,38.363 92.798,41.005
-69.453,61.23 76.45,91.316 50,75.364 23.55,91.315 30.547,61.23 7.203,41.005 37.978,38.363 "
-      />
-  }
-  <!-- start user -->
-  @if (type() === 'user') {
+    />
+    }
+    @case ('row') {
+    <polygon points="96,50 66.5,20 66.5,37.5 33.5,37.5 33.5,20 4,50 33.5,80 33.5,62.5 66.5,62.5 66.5,80" />
+    }
+    @case ('column') {
+    <polygon points="62.5,33.535 80,33.535 50,3.535 20,33.535 37.5,33.535 37.5,66.465 20,66.465 50,96.465 80,66.465 62.5,66.465" />
+    }
+    @case ('bomb') {
+    <path d="M93.634,34.651c4.687-4.686,5.182-11.789,1.107-15.863L81.213,5.261c-4.074-4.076-11.178-3.58-15.863,1.105l-1.252,1.252C59.294,5.929,54.132,5,48.75,5C23.207,5,2.5,25.707,2.5,51.25S23.207,97.5,48.75,97.5S95,76.793,95,51.25c0-5.381-0.929-10.543-2.618-15.347L93.634,34.651z M70.4,64.681l-12.009-1.009l-1.091,12.001l-8.551-8.492l-8.55,8.492l-1.091-12.001L27.1,64.681l6.878-9.896L24.13,47.84l11.63-3.159l-3.08-11.65l10.939,5.056l5.13-10.905l5.131,10.905L64.82,33.03l-3.08,11.65l11.63,3.159l-9.849,6.945L70.4,64.681z" />
+    }
+    @case ('flag') {
+    <polygon points="93,33.86 22.5,7.368 22.5,2.5 2.5,2.5 2.5,97.5 22.5,97.5 22.5,59.915" />
+    }
+    @case ('gear') {
+    <path d="M96.35,39.625C95.178,34.369,93.14,29.44,90.385,25H80l-5-5V9.618C70.554,6.859,65.617,4.82,60.353,3.65L56.61,7.761L50,15.022l-6.61-7.261L39.647,3.65C34.382,4.82,29.447,6.859,25,9.618V20l-5,5H9.615C6.86,29.44,4.822,34.369,3.65,39.625l4.165,3.764L15.132,50l-7.316,6.61L3.65,60.375C4.822,65.631,6.86,70.56,9.615,75H20l5,5v10.382c4.441,2.755,9.371,4.793,14.628,5.964l3.761-4.162L50,84.867l6.61,7.316l3.761,4.162c5.258-1.171,10.188-3.209,14.629-5.964V80l5-5h10.385c2.755-4.44,4.793-9.369,5.965-14.625l-4.165-3.765L84.869,50l7.315-6.611L96.35,39.625z M50,72.5c-12.427,0-22.5-10.073-22.5-22.5c0-12.426,10.073-22.5,22.5-22.5S72.5,37.574,72.5,50C72.5,62.427,62.427,72.5,50,72.5z" />
+    }
+    @case ('star') {
+    <polygon points="50,9.91 62.022,38.363 92.798,41.005
+69.453,61.23 76.45,91.316 50,75.364 23.55,91.315 30.547,61.23 7.203,41.005 37.978,38.363 " />
+    }
+    @case ('user') {
     <circle
-      fill="#FFFFFF"
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
       cx="50"
       cy="27.5"
       r="25"
-      />
-  }
-  @if (type() === 'user') {
+    />
+    <path d="M86.6,52.5H71.646 C67.324,59.971,59.252,65,50,65s-17.324-5.029-21.646-12.5H14.4c-6.297,0-11.9,5.373-11.9,12v33h95v-33 C97.5,57.873,92.896,52.5,86.6,52.5z" />
+    }
+    @case ('refresh') {
     <path
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
-      d="M86.6,52.5H71.646 C67.324,59.971,59.252,65,50,65s-17.324-5.029-21.646-12.5H14.4c-6.297,0-11.9,5.373-11.9,12v33h95v-33 C97.5,57.873,92.896,52.5,86.6,52.5z"
-      />
-  }
-  <!-- end user -->
-  @if (type() === 'bomb') {
-    <path
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
-      d="M93.634,34.651c4.687-4.686,5.182-11.789,1.107-15.863L81.213,5.261c-4.074-4.076-11.178-3.58-15.863,1.105l-1.252,1.252C59.294,5.929,54.132,5,48.75,5C23.207,5,2.5,25.707,2.5,51.25S23.207,97.5,48.75,97.5S95,76.793,95,51.25c0-5.381-0.929-10.543-2.618-15.347L93.634,34.651z M70.4,64.681l-12.009-1.009l-1.091,12.001l-8.551-8.492l-8.55,8.492l-1.091-12.001L27.1,64.681l6.878-9.896L24.13,47.84l11.63-3.159l-3.08-11.65l10.939,5.056l5.13-10.905l5.131,10.905L64.82,33.03l-3.08,11.65l11.63,3.159l-9.849,6.945L70.4,64.681z"
-      />
-  }
-  <!-- start refresh -->
-  @if (type() === 'refresh') {
-    <path
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
       stroke-miterlimit="10"
       d="M50,80c-9.186,0-17.391-4.141-22.893-10.643L37.5,58.965h-35v35l12.204-12.204C23.395,91.42,35.982,97.5,50,97.5c26.232,0,47.5-21.268,47.5-47.5H80C80,66.568,66.568,80,50,80z"
-      />
-  }
-  @if (type() === 'refresh') {
+    />
     <path
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
       stroke-miterlimit="10"
       d="M85.296,18.24C76.605,8.58,64.018,2.5,50,2.5C23.768,2.5,2.5,23.768,2.5,50H20c0-16.568,13.432-30,30-30c9.186,0,17.393,4.141,22.893,10.643L62.5,41.036h35v-35L85.296,18.24z"
-      />
-  }
-  <!-- end refresh -->
-  @if (type() === 'ascend') {
-    <polygon
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
-      points="50,3.841 20,38.842 80,38.842"
-      />
-  }
-  @if (type() === 'descend') {
-    <polygon
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
-      points="50,96.158 20,61.158 80,61.158"
-      />
-  }
-  @if (type() === 'search') {
+    />
+    }
+    @case ('ascend') {
+    <polygon points="50,3.841 20,38.842 80,38.842" />
+    }
+    @case ('descend') {
+    <polygon points="50,96.158 20,61.158 80,61.158" />
+    }
+    @case ('search') {
     <path
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
       stroke-miterlimit="10"
       d="M96.465,87.627L70.56,61.721C74.924,55.591,77.5,48.099,77.5,40C77.5,19.29,60.711,2.5,40,2.5C19.29,2.5,2.5,19.29,2.5,40c0,20.711,16.79,37.5,37.5,37.5c8.098,0,15.591-2.575,21.72-6.94l25.906,25.905L96.465,87.627z M40,65c-13.807,0-25-11.192-25-25c0-13.807,11.193-25,25-25c13.808,0,25,11.193,25,25C65,53.808,53.808,65,40,65z"
-      />
-  }
-  @if (type() === 'crown') {
+    />
+    }
+    @case ('crown') {
     <path
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
       stroke-miterlimit="10"
-    d="M95,22.5c0-4.143-3.357-7.5-7.5-7.5
+      d="M95,22.5c0-4.143-3.357-7.5-7.5-7.5
 	S80,18.357,80,22.5c0,2.145,0.904,4.073,2.347,5.44L67.673,66.273l-13.37-50.136C56.234,14.781,57.5,12.54,57.5,10
 	c0-4.143-3.357-7.5-7.5-7.5s-7.5,3.357-7.5,7.5c0,2.54,1.266,4.78,3.197,6.137l-13.37,50.136L17.654,27.939
 	C19.096,26.573,20,24.644,20,22.5c0-4.143-3.357-7.5-7.5-7.5S5,18.357,5,22.5c0,3.673,2.642,6.724,6.128,7.369L14.857,72.5H12.5v15
 	H10v10h80v-10h-2.5v-15h-2.356l3.729-42.631C92.358,29.223,95,26.173,95,22.5z"
-      />
-  }
-  @if (type() === 'ogre') {
+    />
+    }
+    @case ('ogre') {
     <path
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
       stroke-miterlimit="10"
-    d="M82.5,5.721c0,0,5,5,5,15s-10,10-10,10h-3.519
+      d="M82.5,5.721c0,0,5,5,5,15s-10,10-10,10h-3.519
 	C72.018,28.728,69.393,27.5,66.5,27.5h-33c-2.894,0-5.518,1.228-7.481,3.221H22.5c0,0-10,0-10-10s5-15,5-15s-15,5-15,20
 	c0,13.263,7.821,22.61,20,24.6V60.5c0,6.583,4.861,11.923,10.881,11.993C33.869,79.732,35,87.834,35,90c0,4.143,3.357,7.5,7.5,7.5
 	h15c4.143,0,7.5-3.357,7.5-7.5c0-2.166,1.131-10.268,1.62-17.507c6.019-0.07,10.88-5.41,10.88-11.993V50.32
 	c12.179-1.989,20-11.337,20-24.6C97.5,10.721,82.5,5.721,82.5,5.721z M37.5,65c-4.143,0-7.5-3.357-7.5-7.5s3.357-7.5,7.5-7.5
 	s7.5,3.357,7.5,7.5S41.643,65,37.5,65z M62.5,65c-4.143,0-7.5-3.357-7.5-7.5s3.357-7.5,7.5-7.5s7.5,3.357,7.5,7.5S66.643,65,62.5,65
 	z"
-      />
-  }
-  @if (type() === 'folder') {
+    />
+    }
+    @case ('folder') {
     <path
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
       stroke-miterlimit="10"
-    d="M42.503,10.5c-9.836,0-28.103,0-28.103,0
+      d="M42.503,10.5c-9.836,0-28.103,0-28.103,0
 	c-6.296,0-11.9,5.373-11.9,12v56c0,6.627,5.604,12,11.9,12h72.2c6.296,0,10.9-5.373,10.9-12c0,0,0-37.406,0-44
 	s-4.467-11.989-10.9-12s-33.807,0-33.807,0S52.339,10.5,42.503,10.5z"
-      />
-  }
-  @if (type() === 'chevron') {
+    />
+    }
+    @case ('chevron') {
     <path
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
       stroke-miterlimit="10"
       d="M 81.371204,80.734189 96.459378,65.734039 50.000001,19.268573 3.5406224,65.734039 18.628797,80.734189 50.000001,49.268874 Z"
-      />
-  }
-  @if (type() === 'ankh') {
+    />
+    }
+    @case ('ankh') {
     <path
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
       stroke-miterlimit="10"
-    d="M85,60l-5-15H60.938
+      d="M85,60l-5-15H60.938
 	C65.605,36.781,70,27.677,70,22.5c0-11.046-8.955-20-20-20c-11.046,0-20,8.954-20,20c0,5.177,4.394,14.281,9.062,22.5H19.999L15,60
 	l28.965-4.138L40,97.5h20l-3.967-41.638L85,60z M49.999,12.551c5.524,0,10.001,4.478,10.001,10c0,5.523-10.001,20-10.001,20
 	s-10-14.477-10-20C40,17.028,44.477,12.551,49.999,12.551z"
-      />
-  }
-  @if (type() === 'sun') {
+    />
+    }
+    @case ('sun') {
     <polygon
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
       stroke-miterlimit="10"
-    points="50.001,5.864 57.541,21.864
-	72.068,11.778 70.6,29.403 88.224,27.933 78.14,42.461 94.137,50 78.14,57.541 88.224,72.07 70.6,70.6 72.068,88.225 57.541,78.141
-	50.001,94.137 42.461,78.141 27.933,88.225 29.403,70.6 11.777,72.07 21.863,57.541 5.864,50 21.863,42.461 11.777,27.933
-	29.403,29.403 27.933,11.778 42.461,21.864 "
-      />
-  }
-  @if (type() === 'moon') {
+      points="50.001,5.864 57.541,21.864
+72.068,11.778 70.6,29.403 88.224,27.933 78.14,42.461 94.137,50 78.14,57.541 88.224,72.07 70.6,70.6 72.068,88.225 57.541,78.141
+50.001,94.137 42.461,78.141 27.933,88.225 29.403,70.6 11.777,72.07 21.863,57.541 5.864,50 21.863,42.461 11.777,27.933
+29.403,29.403 27.933,11.778 42.461,21.864 "
+    />
+    }
+    @case ('moon') {
     <path
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
       stroke-miterlimit="10"
-    d="M90.029,62.626
+      d="M90.029,62.626
 	c-14.54,14.54-38.115,14.539-52.654,0c-14.54-14.54-14.54-38.114,0-52.654c2.739-2.74,5.802-4.963,9.061-6.67
 	C35.463,4.049,24.701,8.604,16.313,16.991c-18.417,18.418-18.417,48.278,0,66.696c18.417,18.416,48.278,18.416,66.694,0
 	c8.389-8.389,12.942-19.149,13.69-30.123C94.989,56.825,92.768,59.886,90.029,62.626z"
-      />
-  }
-  @if (type() === 'clear') {
+    />
+    }
+    @case ('clear') {
     <rect
+      stroke-miterlimit="10"
       x="2.5"
       y="2.5"
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
-      stroke-miterlimit="10"
       width="75"
       height="75"
-      />
-  }
-  @if (type() === 'clear') {
+    />
     <rect
+      stroke-miterlimit="10"
+      fill="none"
+      stroke-dasharray="13.25 5.5"
       x="22.5"
       y="22.5"
-      fill="none"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
-      stroke-miterlimit="10"
-      stroke-dasharray="13.25 5.5"
       width="75"
       height="75"
-      />
-  }
-  @if (type() === 'amphora') {
+    />
+    }
+    @case ('amphora') {
     <path
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
       stroke-miterlimit="10"
-    d="M92.5,28c0-11.046-7.835-20-17.5-20
+      d="M92.5,28c0-11.046-7.835-20-17.5-20
 	c-3.586,0-6.917,1.237-9.691,3.352c0.025-0.749,0.084-1.409,0.191-1.852c0.471-1.918,3.5-7,3.5-7H31c0,0,3.03,5.082,3.5,7
 	c0.108,0.442,0.166,1.103,0.192,1.852C31.917,9.237,28.586,8,25,8C15.335,8,7.5,16.954,7.5,28c0,7.019,3.17,13.182,7.956,16.751
 	C15.165,46.438,15,48.187,15,50c0,13.744,18.5,40.5,18.5,40.5l-2.5,7h38l-2.5-7c0,0,18.5-26.756,18.5-40.5
@@ -386,20 +230,18 @@
 	c2.789,0,5.309,1.43,7.122,3.732c-3.582,2.808-10.347,8.93-14.215,17.577C16.111,34.549,15,31.437,15,28z M82.093,36.809
 	c-3.866-8.647-10.634-14.769-14.215-17.577C69.691,16.93,72.211,15.5,75,15.5c5.521,0,10,5.597,10,12.5
 	C85,31.437,83.889,34.549,82.093,36.809z"
-      />
-  }
-  @if (type() === 'speech') {
+    />
+    }
+    @case ('speech') {
     <path
-      attr.fill="url(#fill-gradient-{{id}})"
-      [attr.fill-opacity]="fillOpacity()"
-      attr.stroke="url(#stroke-gradient-{{id}})"
-      stroke-width="5"
       stroke-miterlimit="10"
-    d="M50,2.5C26.702,2.5,2.5,22.339,2.5,45
+      d="M50,2.5C26.702,2.5,2.5,22.339,2.5,45
 	c0,8.368,3.307,16.347,8.641,23.084L3.979,94.813l23.196-13.393c7.078,3.83,15,6.076,22.825,6.076c23.299,0,47.5-19.838,47.5-42.5
 	C97.5,22.336,73.299,2.5,50,2.5z M75,60.001H25c-2.762,0-5-2.238-5-5s2.238-5,5-5h50c2.762,0,5,2.239,5,5
 	C80,57.763,77.762,60.001,75,60.001z M75,40H25c-2.762,0-5-2.239-5-5s2.238-5,5-5h50c2.762,0,5,2.239,5,5C80,37.763,77.762,40,75,40
 	z"
-      />
-  }
+    />
+    }
+    }
+  </g>
 </svg>
