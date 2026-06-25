@@ -2,6 +2,8 @@
   "name": "icon",
   "version": "0.0.0",
   "scripts": {
+    "test": "ng test icon",
+    "test:watch": "ng test icon --watch",
     "pages": "ng build --project=demo --base-href=https://joster-dev.github.io/icon/",
     "package": "npm run _build-lib && npm run _npm-publish",
     "_build-lib": "ng build --project=icon && npm run _copy-license",
@@ -18,8 +20,7 @@
     "@angular/platform-browser": "^22.0.2",
     "@angular/platform-browser-dynamic": "^22.0.2",
     "@angular/router": "^22.0.2",
-    "@joster-dev/chaos-control": "0.1.2",
-    "@joster-dev/style": "0.1.2",
+    "@joster-dev/chaos-control": "0.3.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.1"
@@ -28,15 +29,10 @@
     "@angular-devkit/build-angular": "^22.0.3",
     "@angular/cli": "^22.0.3",
     "@angular/compiler-cli": "^22.0.2",
-    "@types/jasmine": "~5.1.0",
     "istanbul-lib-instrument": "^6.0.3",
-    "jasmine-core": "~5.1.0",
-    "karma": "~6.4.0",
-    "karma-chrome-launcher": "~3.2.0",
-    "karma-coverage": "~2.2.0",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.1.0",
+    "jsdom": "^29.1.1",
     "ng-packagr": "^22.0.0",
-    "typescript": "~6.0.3"
+    "typescript": "~6.0.3",
+    "vitest": "^4.1.9"
   }
 }
