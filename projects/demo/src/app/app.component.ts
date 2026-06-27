@@ -1,52 +1,67 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { ChaosControlModule } from '@joster-dev/chaos-control';
+import {
+  ChoiceComponent,
+  ColorComponent,
+  SelectComponent,
+  TextComponent,
+} from '@joster-dev/chaos-control';
 
 import { iconTypes, icon, IconComponent, IconStackComponent } from 'icon';
 
 @Component({
-    selector: 'demo-root',
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [FormsModule, ChaosControlModule, IconComponent, IconStackComponent]
+  selector: 'demo-root',
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    FormsModule,
+    ChoiceComponent,
+    ColorComponent,
+    SelectComponent,
+    TextComponent,
+    IconComponent,
+    IconStackComponent,
+  ],
 })
 export class AppComponent {
+  @ViewChild('iconDemoCard', { static: true }) iconDemoCard!: ElementRef<HTMLDivElement>;
+
   readonly iconStartText = '<icon';
   readonly iconEndText = '></icon>';
   readonly iconText = '<icon type></icon>';
   readonly iconStackText = '...</icon-stack>';
 
   searchTerm: string | null = null;
-  typeItem = new IconTypeItem('circle');
+  typeItem = new IconTypeItem('times');
   iconStackDemo: icon[] = ['times', 'ring'];
 
   iconTypes = iconTypes;
-  iconTypeItems = iconTypes.map(item => ({ key: item, value: item }));
+  iconTypeItems = iconTypes.map((item) => ({ key: item, value: item }));
   rotateItems = [
     { key: 0, value: '0' },
     { key: 45, value: '45' },
     { key: 90, value: '90' },
-  ]
+  ];
   spinItems = [
     { key: 'x', value: 'x' },
-    { key: 'y', value: 'y' }
+    { key: 'y', value: 'y' },
   ];
   opacityItems = [
     { key: 1, value: '1' },
     { key: 0.7, value: '0.7' },
-    { key: 0.4, value: '0.4' }
+    { key: 0.4, value: '0.4' },
   ];
 
-  constructor() { }
+  constructor() {}
 
   get filteredTypes() {
-    if (this.searchTerm === null)
-      return this.iconTypes;
+    if (this.searchTerm === null) return this.iconTypes;
 
-    return this.iconTypes
-      .filter(item => item.toLowerCase().includes(this.searchTerm!.toLowerCase()));
+    return this.iconTypes.filter((item) =>
+      item.toLowerCase().includes(this.searchTerm!.toLowerCase()),
+    );
   }
 
   get iconStackHtmlCode() {
@@ -55,18 +70,18 @@ export class AppComponent {
       `<icon type="times"`,
       `  [fill]="['00FF00', 'FF0000', '0000FF']"></icon>`,
       `<icon type="ring"></icon>`,
-      '</icon-stack>'
+      '</icon-stack>',
     ];
     lines = lines.map((line, index) => {
-      if (index > 0 && index < lines.length - 1)
-        return `  ${line}`;
+      if (index > 0 && index < lines.length - 1) return `  ${line}`;
       return line;
     });
     return lines;
   }
 
   onClickIcon(icon: icon) {
-    this.typeItem.type = icon
+    this.typeItem.type = icon;
+    this.iconDemoCard.nativeElement.scrollIntoView({ behavior: 'smooth' });
   }
 
   onClickRefine() {
@@ -78,24 +93,22 @@ export class AppComponent {
   }
 
   mapColors(items: { color: string | null }[]) {
-    return items.map(item => item.color);
+    return items.map((item) => item.color);
   }
 
   htmlCode(item: IconTypeItem) {
     let lines = [
       `<icon type="${item.type}"`,
-      `[fill]="[${item.fill.map(fill => `${fill.color === null ? 'null' : `'${fill.color}'`}`).join(', ')}]"`,
+      `[fill]="[${item.fill.map((fill) => `${fill.color === null ? 'null' : `'${fill.color}'`}`).join(', ')}]"`,
       `[fillRotate]="${item.fillRotate}"`,
-      `[stroke]="[${item.stroke.map(stroke => `${stroke.color === null ? 'null' : `'${stroke.color}'`}`).join()}]"`,
+      `[stroke]="[${item.stroke.map((stroke) => `${stroke.color === null ? 'null' : `'${stroke.color}'`}`).join()}]"`,
       `[strokeRotate]="${item.strokeRotate}"`,
       `[spin]="${item.spin}"`,
-      `></icon>`
+      `></icon>`,
     ];
 
-
     lines = lines.map((line, index) => {
-      if (index > 0 && index < lines.length - 1)
-        return `  ${line}`;
+      if (index > 0 && index < lines.length - 1) return `  ${line}`;
       return line;
     });
     return lines;
@@ -105,18 +118,14 @@ export class AppComponent {
 class IconTypeItem {
   fill: { color: string | null }[] = [
     { color: '700024' },
-    { color: '000000' },
+    { color: null },
     { color: '002470' },
   ];
   fillRotate = 0;
   fillOpacity = 1;
-  stroke = [
-    { color: 'FFFFFF' }
-  ];
+  stroke = [{ color: 'FFFFFF' }];
   strokeRotate = 0;
   spin: 'x' | 'y' | null = null;
 
-  constructor(
-    public type: icon,
-  ) { }
+  constructor(public type: icon) {}
 }
